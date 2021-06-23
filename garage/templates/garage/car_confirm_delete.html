@@ -1,0 +1,21 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+<header>
+    {% include 'garage/_menu.html' %}
+</header>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p> Are you sure you want to delete "{{ car.model }}"?</p>
+    <div class="col">
+        <div class="card shadow-sm">
+        <img class="bd-placeholder-img card-img-top" max-width:75% max-height:75% src="http://127.0.0.1:8000{{car.image.url}}">
+          <div class="card-body">
+            <p class="card-text">{{car.model}}</p>
+          </div>
+        </div>
+      </div>
+     <input type="submit" type="button" class="btn btn-danger btn-md" value="Confirm">
+     <a href="{% url 'car_detail' pk=object.id %}" type="button" class="btn btn-warning btn-md">Go Back</a>
+</form>

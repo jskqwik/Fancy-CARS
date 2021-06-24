@@ -124,7 +124,7 @@ if DEBUG is True:
     MEDIA_URL = '/media/'
 else:
     STATIC_URL = '/static/'
-    STATIC_ROOT = '/static/'          
+    # STATIC_ROOT = '/static/'          
     STATIC_ROOT = '/var/www/venv/Fancy-CARS/fancycars_projct/static/'
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, '/var/www/venv/Fancy-CARS/fancycars_projct/media/')

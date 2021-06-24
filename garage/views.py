@@ -35,13 +35,15 @@ class UserCreateView(View):
         form = self.form_class(request.POST)
         print(dir(form))
         if form.is_valid():
-            print("something silly")
             form.save()
-            return HttpResponseRedirect("")
+            return HttpResponseRedirect(reverse_lazy('car_list'))
         else:
             return render(request, self.template_name, {"form":form})
 
-
+class ProfileView(View):
+    def get(self, request):
+        print(request.user)
+        return render(request, 'garage/profile_view.html', {'profile':request.user})
 # HTML VIEWS
 
 class CarListView(ListView):
@@ -52,29 +54,29 @@ class CarDetailView(DetailView):
 
 class CarCreateView(CreateView):
     model = Car
-    fields = ['model', 'make', 'engine', 'color', 'year', 'image', 'speed']
+    fields = ['model', 'make', 'engine', 'interior_color','body_color', 'year', 'image', 'speed']
     success_url = reverse_lazy('car_list')
 
 class CarUpdateView(UpdateView):
     model = Car
-    fields = ['model', 'make', 'engine', 'color', 'year', 'image', 'speed']
+    fields = ['model', 'make', 'engine', 'interior_color', 'body_color', 'year', 'image', 'speed']
     template_name_suffix = "_update_form"
 
 class CarDeleteView(DeleteView):
     model = Car
     success_url = reverse_lazy('car_list')
 
-class FilterCarsColorView(ListView):
-    model = Car
-    template_name = "garage/carbycolor.html"
+# class FilterCarsColorView(ListView):
+#     model = Car
+#     template_name = "garage/carbycolor.html"
 
-    def get_queryset(self):
-        print("----", self.request.GET.get("color"))
-        car_color = self.request.GET.get("color").capitalize()
-        if car_color in ["White","Black","Red","Orange"]:
-            queryset = Car.objects.filter(color=car_color)
-            print(queryset)
-            return queryset
+#     def get_queryset(self):
+#         print("----", self.request.GET.get("color"))
+#         car_color = self.request.GET.get("color").capitalize()
+#         if car_color in ["White","Black","Red","Orange"]:
+#             queryset = Car.objects.filter(color=car_color)
+#             print(queryset)
+#             return queryset
 
 class FilterCarMakeView(ListView):
     model = Car

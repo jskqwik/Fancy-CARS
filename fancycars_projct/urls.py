@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from garage.views import (
@@ -23,12 +23,13 @@ from garage.views import (
     CarCreateView, 
     CarUpdateView, 
     CarDeleteView, 
-    FilterCarsColorView,
+    # FilterCarsColorView,
     FilterCarMakeView,
     CarListAPIView,
     CarDetailAPIView,
     CarCreateAPIView,
     UserCreateView,
+    ProfileView,
 )
 
 
@@ -39,12 +40,14 @@ urlpatterns = [
     path('create/', CarCreateView.as_view(), name="car_create"),
     path('update/<int:pk>/', CarUpdateView.as_view(), name="car_update"),
     path('delete/<int:pk>/', CarDeleteView.as_view(), name="car_delete"),
-    path('bycolor/', FilterCarsColorView.as_view(), kwargs={"color": None}, name="find_car_color"),
+    # path('bycolor/', FilterCarsColorView.as_view(), kwargs={"color": None}, name="find_car_color"),
     path('bymake/', FilterCarMakeView.as_view(), kwargs={"make": None}, name="find_car_make"),
     path('api/', CarListAPIView.as_view(), name="car_apilist"),
     path('api/<int:pk>/', CarDetailAPIView.as_view(), name="car_apidetail"),
     path('createapi/', CarCreateAPIView.as_view(), name="car_apicreate"),
     path('usercreate/', UserCreateView.as_view(), name="user_create"),
+    path('accounts/', include("django.contrib.auth.urls")),
+    path('accounts/profile/', ProfileView.as_view(), )
 ]
 
 
